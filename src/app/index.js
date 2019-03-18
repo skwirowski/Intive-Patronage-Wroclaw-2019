@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
-import Coordinates from '../components/Coordinates'
-import './css/styles.css';
+import Map from '../components/Map';
+import Coordinates from '../components/Coordinates';
+import Speed from '../components/Speed';
 
 class App extends Component {
   state = {
     loading: true,
     timestamp: null,
-    iss_position: {
-      latitude: null,
-      longitude: null
-    }
+    issPosition: {
+      longitude: null,
+      latitude: null
+    },
+    errorMessage: null
   }
 
   componentDidMount() {
@@ -31,7 +33,10 @@ class App extends Component {
       this.setState({
         loading: false,
         timestamp: data.timestamp,
-        iss_position: data.iss_position,
+        issPosition: [
+          data.iss_position.longitude,
+          data.iss_position.latitude
+        ],
         errorMessage: null
       });
     })
@@ -45,11 +50,19 @@ class App extends Component {
 
   render() {
     return (
+      <Fragment>
+        <Map
+          issPosition={this.state.issPosition}
+        />
       <Coordinates>
         <p>{this.state.timestamp}</p>
-        <p>{this.state.iss_position.latitude}</p>
-        <p>{this.state.iss_position.longitude}</p>
+        <p>{this.state.issPosition[0]}</p>
+        <p>{this.state.issPosition[1]}</p>
       </Coordinates>
+      <Speed
+        issPosition={this.state.issPosition}
+      />
+      </Fragment>
     );
   }
 }
