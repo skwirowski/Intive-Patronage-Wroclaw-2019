@@ -1,0 +1,11 @@
+.speed {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  color: white;
+}
+.speed p {
+  background: #474545;
+  padding: 5px;
+  margin: 2px;
+}
